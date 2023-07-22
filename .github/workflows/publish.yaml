@@ -21,9 +21,9 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 🏗️ Build:dockerimage
-        uses: docker/build-push-action@v3.1.0
+        uses: docker/build-push-action@v4.1.1
         with:
           context: .
           platform: linux/amd64, linux/arm64
           push: true
-          tags: ghcr.io/springcomp/postfix:latest
+          tags: ghcr.io/${{ github.reository_owner }}/postfix:latest
