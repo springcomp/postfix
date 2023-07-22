@@ -1,0 +1,29 @@
+name: 🚀 publish
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  build:
+    name: 'Build'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📚 Build:checkout
+        uses: actions/checkout@v2
+
+      - name: 🫙 Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🏗️ Build:dockerimage
+        uses: docker/build-push-action@v3.1.0
+        with:
+          context: .
+          platform: linux/amd64, linux/arm64
+          push: true
+          tags: ghcr.io/springcomp/postfix:latest
